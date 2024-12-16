@@ -77,7 +77,7 @@ def parse_instruction(data: int):
     if op == 15 and ld_type == 3:
         print("Invalid instruction, no alu op and no load")
         return
-    if op != 15 and ld_type == 3:
+    if op != 15 and ld_type != 3:
         print("Invalid instruction, alu op and load conflict")
         return
 
