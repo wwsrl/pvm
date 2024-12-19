@@ -3,4 +3,8 @@ name = "pvm"
 version = "0.1.0"
 edition = "2021"
 
+[[bin]]
+name = "command_inspector"
+src = "command_inspector"
+
 [dependencies]

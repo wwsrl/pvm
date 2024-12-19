@@ -48,7 +48,7 @@ ALU commands are always at least 2 byte wide, if it interacts with registers 2 e
 > Note:
 > 
 > all 0 instruction is invalid, trying to execute it triggers a handleable exception,
-> an instruction in the form: 0xFFFFFFFF is a NOP.
+> an instruction in the form: 0xFFFF is a NOP.
 
 ## 3.1 - ALU command structure
 These are the bits composing a command and their meanings 0 --> 15 order:
@@ -134,4 +134,11 @@ uint16_t source      = (0x0F00 & instruction) <<  8;
 uint16_t destination = (0xF000 & instruction) << 12;
 ```
 
-Togheter with this spec there is a file called `decoder.py` that when run allows you to test decoding some instructions
+Invalid instructions, instructions are invalid and will raise errors in the following cases:
+* 0x0000, an instruction comprising of all 0s is invalid;
+* source == destination, You cannot move the values of a register on itself;
+* operation != 0xF and load_type != 3, you cannot operate the ALU and load data in the same instruction;
+* operation == 0xF and load_type == 3, no load or ALU operation, this is invalid and not a NOP;
+
+When load_type == 2, load load_length bytes Immediately after the instruction.
+
